@@ -1,7 +1,7 @@
 database:
-url: "http://localhost"
-host: "127.0.0.1"
-port: "5432"
-dbname: "weblog"
-username: "user"
-password: "password"
+  url: "http://localhost"
+  host: "127.0.0.1"
+  port: "5432"
+  dbname: "weblog"
+  username: "user"
+  password: "password"
