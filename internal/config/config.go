@@ -2,15 +2,16 @@ package config
 
 type (
 	Config struct {
-		Database database
+		Postgres Pgsql `yaml:"pgsql"`
 	}
 
-	database struct {
+	Pgsql struct {
 		Url      string `yaml:"url"`
 		Host     string `yaml:"host"`
 		Port     string `yaml:"port"`
 		Dbname   string `yaml:"dbname"`
 		Username string `yaml:"username"`
 		Password string `yaml:"password"`
+		Sslmode  string `yaml:"sslmode"`
 	}
 )

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/idanieldrew/blog-golang/cmd"
 	"github.com/idanieldrew/blog-golang/internal/config"
 	"log"
 )
@@ -16,5 +17,8 @@ func init() {
 }
 
 func main() {
+	if err := cmd.Serve(cfg); err != nil {
+		log.Fatalln(err)
+	}
 	fmt.Print("success")
 }
