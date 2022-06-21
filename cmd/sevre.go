@@ -6,14 +6,14 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+const path = "build/config/config.yml"
+
 var serveCMD = &cli.Command{
 	Name:    "serve",
 	Aliases: []string{"s"},
 	Usage:   "serve http",
 	Action:  serve,
 }
-
-const path = "build/config/config.yml"
 
 func serve(c *cli.Context) error {
 	cfg := new(config.Config)
