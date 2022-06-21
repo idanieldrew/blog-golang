@@ -21,6 +21,7 @@ func New(cfg config.Pgsql) (repository.PostgresQL, error) {
 	if pe := db.Ping(); pe != nil {
 		return nil, pe
 	}
+
 	return &postgres{db: db}, nil
 }
 
