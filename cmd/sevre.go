@@ -26,5 +26,8 @@ func serve(c *cli.Context) error {
 		return err
 	}
 
+	// Http server
+	//handler := gin.New()
+
 	return nil
 }
