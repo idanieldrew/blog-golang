@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/idanieldrew/blog-golang/internal/config"
 	"github.com/idanieldrew/blog-golang/internal/repository"
@@ -29,21 +30,6 @@ func New(cfg config.Pgsql) (repository.PostgresQL, error) {
 		return nil, me
 	}
 
-/*	driver, ie := postgres2.WithInstance(db, &postgres2.Config{})
-	if ie != nil {
-		return nil, ie
-	}
-
-	m, me := migrate.NewWithDatabaseInstance(
-		"file///migrations",
-		"weblog",
-		driver,
-	)
-	if me != nil {
-		return nil, me
-	}
-
-	_ = m.Up()*/
 	return &postgres{db: db}, nil
 }
 
@@ -58,7 +44,7 @@ func dsn(cfg config.Pgsql) string {
 }
 
 func migration(cfg config.Pgsql) error {
-	m, err := migrate.New("file:///migrations", "postgres://daniel:secret@localhost:5432/database?sslmode=disable")
+	m, err := migrate.New("file://migrations", cfg.PgUrl)
 	if err != nil {
 		return err
 	}
@@ -68,5 +54,4 @@ func migration(cfg config.Pgsql) error {
 	}
 
 	return nil
-
 }

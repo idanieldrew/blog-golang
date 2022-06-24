@@ -5,3 +5,4 @@ postgtes:
   dbname: "weblog"
   username: "user"
   password: "password"
+    pgurl: "postgres://user:password@localhost:5432/weblog"

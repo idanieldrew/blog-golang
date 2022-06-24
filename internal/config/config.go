@@ -13,5 +13,6 @@ type (
 		Username string `yaml:"username"`
 		Password string `yaml:"password"`
 		Sslmode  string `yaml:"sslmode"`
+		PgUrl    string `yaml:"pgurl"`
 	}
 )
