@@ -44,7 +44,7 @@ func dsn(cfg config.Pgsql) string {
 }
 
 func migration(cfg config.Pgsql) error {
-	m, err := migrate.New("file://migrations", cfg.PgUrl)
+	m, err := migrate.New("file://internal/migrations", cfg.PgUrl)
 	if err != nil {
 		return err
 	}
