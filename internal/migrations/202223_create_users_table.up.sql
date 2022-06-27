@@ -1,20 +1,12 @@
-CREATE TABLE IF NOT EXISTS users
-(
-    user_id
-    serial
-    PRIMARY
-    KEY,
-    username
-    VARCHAR
-(
-    50
-) UNIQUE NOT NULL,
-    password VARCHAR
-(
-    50
-) NOT NULL,
-    email VARCHAR
-(
-    300
-) UNIQUE NOT NULL
+CREATE TABLE IF NOT EXISTS users(
+    id serial PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    email VARCHAR(60) NOT NULL,
+    phone VARCHAR(30) NOT NULL,
+    password VARCHAR(16) NOT NULL,
+    types INTEGER NOT NULL DEFAULT 1,
+    CONSTRAINT users FOREIGN KEY (types) REFERENCES user_type (id),
+    email_verified_at TIMESTAMP NULL DEFAULT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT NULL
     );
