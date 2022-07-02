@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/idanieldrew/blog-golang/internal/app"
 	"github.com/idanieldrew/blog-golang/internal/config"
 	"github.com/idanieldrew/blog-golang/internal/repository/postgres"
 	"github.com/urfave/cli/v2"
@@ -26,8 +27,7 @@ func serve(c *cli.Context) error {
 		return err
 	}
 
-	// Http server
-	//handler := gin.New()
+	app.StartApp()
 
 	return nil
 }

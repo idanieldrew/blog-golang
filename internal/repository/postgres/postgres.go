@@ -16,21 +16,26 @@ type postgres struct {
 	db *sql.DB
 }
 
+var (
+	Db *sql.DB
+)
+
 func New(cfg config.Pgsql) (repository.PostgresQL, error) {
-	db, err := sql.Open("postgres", dsn(cfg))
+	var err error
+	Db, err = sql.Open("postgres", dsn(cfg))
 	if err != nil {
 		return nil, err
 	}
 
-	if pe := db.Ping(); pe != nil {
+	if pe := Db.Ping(); pe != nil {
 		return nil, pe
 	}
 
-	if me := migration(cfg); me != nil {
+	/*	if me := migration(cfg); me != nil {
 		return nil, me
-	}
+	}*/
 
-	return &postgres{db: db}, nil
+	return &postgres{db: Db}, nil
 }
 
 func dsn(cfg config.Pgsql) string {

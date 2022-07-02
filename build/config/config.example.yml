@@ -3,6 +3,6 @@ postgtes:
   host: "127.0.0.1"
   port: "5432"
   dbname: "weblog"
-  username: "user"
+  username: "user_service"
   password: "password"
-    pgurl: "postgres://user:password@localhost:5432/weblog"
+    pgurl: "postgres://user_service:password@localhost:5432/weblog"

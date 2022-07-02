@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/idanieldrew/blog-golang/cmd"
 	"log"
 )
@@ -11,5 +10,5 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	fmt.Print("success")
+	//fmt.Print("success")
 }
