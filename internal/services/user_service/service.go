@@ -1,7 +1,7 @@
 package user_service
 
 import (
-	"github.com/idanieldrew/blog-golang/internal/entity/model/user"
+	"github.com/idanieldrew/blog-golang/internal/domain/user"
 	"github.com/idanieldrew/blog-golang/pkg/errors/restError"
 )
 

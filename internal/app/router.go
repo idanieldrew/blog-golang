@@ -3,5 +3,10 @@ package app
 import "github.com/idanieldrew/blog-golang/internal/controllers/users"
 
 func mapUrls() {
-	router.GET("/users/:user_id", users.Get)
+	userRoute()
+}
+
+func userRoute()  {
+	user := router.Group("/users")
+	user.GET("/:user_id", users.Get)
 }
