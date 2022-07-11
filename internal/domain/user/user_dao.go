@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"github.com/idanieldrew/blog-golang/internal/repository/postgres"
 	"github.com/idanieldrew/blog-golang/pkg/errors/restError"
+	"github.com/idanieldrew/blog-golang/pkg/logger"
 )
 
 const (
@@ -13,7 +14,7 @@ const (
 func (u *User) Get() *restError.RestError {
 	stmt, err := postgres.Db.Prepare(queryGetUser)
 	if err != nil {
-		// log
+		logger.Error("problem in prepare to get user", err)
 		return restError.ServerError("server error")
 	}
 
@@ -26,7 +27,7 @@ func (u *User) Get() *restError.RestError {
 	res := stmt.QueryRow(u.Id)
 
 	if getErr := res.Scan(&u.Name, &u.Email, &u.Phone); getErr != nil {
-		// log
+		logger.Error("problem when try to get user", getErr)
 		return restError.ServerError("server error")
 	}
 	return nil
