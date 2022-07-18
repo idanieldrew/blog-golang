@@ -58,9 +58,9 @@ func migrate(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	if me := postgres.Migration(cfg.Postgres); me != nil {
+	if me := postgres.Migration(cfg.Postgres, c.Args().Get(0) == "fresh"); me != nil {
 		return me
 	}
-	log.Print("successfully migrate")
+	log.Print("Successfully migrate")
 	return nil
 }
