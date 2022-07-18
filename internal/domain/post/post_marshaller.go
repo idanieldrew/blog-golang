@@ -8,7 +8,7 @@ import (
 
 type (
 	PublicPost struct {
-		Id          uint      `json:"id"`
+		Id          int       `json:"id"`
 		Title       string    `json:"title"`
 		Slug        string    `json:"slug"`
 		Details     string    `json:"details"`
@@ -18,7 +18,7 @@ type (
 	}
 
 	PrivatePost struct {
-		Id          uint      `json:"id"`
+		Id          int       `json:"id"`
 		Title       string    `json:"title"`
 		Slug        string    `json:"slug"`
 		Details     string    `json:"details"`

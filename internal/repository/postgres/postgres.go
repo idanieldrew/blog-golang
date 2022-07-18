@@ -48,7 +48,7 @@ func dsn(cfg config.Pgsql) string {
 	)
 }
 
-func migration(cfg config.Pgsql) error {
+func Migration(cfg config.Pgsql) error {
 	m, err := migrate.New("file://internal/migrations", cfg.PgUrl)
 	if err != nil {
 		return err
@@ -57,6 +57,5 @@ func migration(cfg config.Pgsql) error {
 	if ue := m.Up(); ue != nil {
 		return ue
 	}
-
 	return nil
 }

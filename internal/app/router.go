@@ -12,12 +12,14 @@ func mapUrls() {
 
 func userRoute() {
 	user := router.Group("/users")
-	// Get user
+	//User
 	user.GET("/:user_id", users.Get)
 }
 
 func postRoute() {
 	post := router.Group("/posts")
-	//Get posts
+	//Posts
 	post.GET("/:post", posts.Get)
+	// Store post
+	post.POST("/",posts.Store)
 }

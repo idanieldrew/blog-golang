@@ -7,7 +7,7 @@ import (
 
 func Run() error {
 	app := cli.App{
-		Commands: []*cli.Command{serveCMD},
+		Commands: []*cli.Command{serveCMD, migrateCMD},
 	}
 	return app.Run(os.Args)
 }
