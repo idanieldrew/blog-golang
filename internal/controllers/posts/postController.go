@@ -28,7 +28,7 @@ func Get(ctx *gin.Context) {
 func Store(ctx *gin.Context) {
 	var p post.Post
 	if err := ctx.ShouldBindJSON(&p); err != nil {
-		restErr := restError.BadRequest("invalid json")
+		restErr := restError.BadRequestError("invalid json")
 		ctx.JSON(restErr.Status, restErr)
 	}
 

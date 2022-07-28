@@ -8,6 +8,7 @@ type RestError struct {
 	Message string `json:"message"`
 }
 
+// NotFoundError Not found error
 func NotFoundError(message string) *RestError {
 	return &RestError{
 		Error:   "not_found",
@@ -16,6 +17,7 @@ func NotFoundError(message string) *RestError {
 	}
 }
 
+// ServerError Server error
 func ServerError(message string) *RestError {
 	return &RestError{
 		Error:   "server_error",
@@ -24,6 +26,7 @@ func ServerError(message string) *RestError {
 	}
 }
 
+// ValidationError Validation error
 func ValidationError(message string) *RestError {
 	return &RestError{
 		Error:   "validation_error",
@@ -32,10 +35,20 @@ func ValidationError(message string) *RestError {
 	}
 }
 
-func BadRequest(message string) *RestError {
+// BadRequestError Bad request error
+func BadRequestError(message string) *RestError {
 	return &RestError{
 		Error:   "bad_request",
 		Status:  http.StatusBadRequest,
+		Message: message,
+	}
+}
+
+// UnauthorizedError Unauthorized
+func UnauthorizedError(message string) *RestError {
+	return &RestError{
+		Error:   "unauthorized",
+		Status:  http.StatusUnauthorized,
 		Message: message,
 	}
 }

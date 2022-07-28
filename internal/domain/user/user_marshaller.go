@@ -7,7 +7,7 @@ import (
 
 type (
 	PublicUser struct {
-		Id    int64  `json:"id"`
+		Id    int64  `json:"-"`
 		Name  string `json:"name"`
 		Email string `json:"email"`
 	}

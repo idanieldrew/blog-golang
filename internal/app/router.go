@@ -12,9 +12,10 @@ func mapUrls() {
 }
 
 // auth route
-func authRoute()  {
+func authRoute() {
 	auth := router.Group("v1")
-	auth.POST("register",users.Register)
+	auth.POST("register", users.Register)
+	auth.POST("login", users.Login)
 }
 
 // user route
@@ -30,5 +31,5 @@ func postRoute() {
 	//Posts
 	post.GET("/:post", posts.Get)
 	// Store post
-	post.POST("/",posts.Store)
+	post.POST("/", posts.Store)
 }

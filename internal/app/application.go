@@ -12,7 +12,7 @@ var (
 func StartApp() {
 	mapUrls()
 
-	log.Println("Running")
+	log.Println("Running http:/localhost:8080")
 	err := router.Run(":8080")
 	if err != nil {
 		log.Fatalln(err)

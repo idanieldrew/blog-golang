@@ -13,7 +13,7 @@ import (
 func getUserById(id string) (int64, *restError.RestError) {
 	userId, userErr := strconv.ParseInt(id, 10, 64)
 	if userErr != nil {
-		return 0, restError.BadRequest("user_service id should be a number")
+		return 0, restError.BadRequestError("user_service id should be a number")
 	}
 	return userId, nil
 }
@@ -47,6 +47,25 @@ func Register(ctx *gin.Context) {
 	user, creatErr := user_service.UserService.Create(input)
 	if creatErr != nil {
 		ctx.JSON(creatErr.Status, creatErr)
+		return
+	}
+	ctx.JSON(http.StatusOK, user.Marshal(false))
+}
+
+// Login user
+func Login(ctx *gin.Context) {
+	var input request.LoginUser
+	err := ctx.ShouldBindJSON(&input)
+	if err != nil {
+		restErr := restError.ValidationError(err.Error())
+		ctx.JSON(restErr.Status, restErr)
+		return
+	}
+
+	user, findErr := user_service.UserService.FindUser(input)
+	if findErr != nil {
+		//restErr := restError.ValidationError(findErr.Error)
+		ctx.JSON(findErr.Status, findErr)
 		return
 	}
 	ctx.JSON(http.StatusOK, user.Marshal(false))
