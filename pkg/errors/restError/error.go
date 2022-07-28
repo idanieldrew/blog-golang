@@ -4,7 +4,7 @@ import "net/http"
 
 type RestError struct {
 	Error   string `json:"error"`
-	Status  int   `json:"status"`
+	Status  int    `json:"status"`
 	Message string `json:"message"`
 }
 
@@ -20,6 +20,14 @@ func ServerError(message string) *RestError {
 	return &RestError{
 		Error:   "server_error",
 		Status:  http.StatusInternalServerError,
+		Message: message,
+	}
+}
+
+func ValidationError(message string) *RestError {
+	return &RestError{
+		Error:   "validation_error",
+		Status:  http.StatusUnprocessableEntity,
 		Message: message,
 	}
 }
