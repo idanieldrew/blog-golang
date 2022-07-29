@@ -2,6 +2,7 @@ package users
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/idanieldrew/blog-golang/internal/pkg/token"
 	"github.com/idanieldrew/blog-golang/internal/request"
 	"github.com/idanieldrew/blog-golang/internal/services/user_service"
 	"github.com/idanieldrew/blog-golang/pkg/errors/restError"
@@ -64,9 +65,19 @@ func Login(ctx *gin.Context) {
 
 	user, findErr := user_service.UserService.FindUser(input)
 	if findErr != nil {
-		//restErr := restError.ValidationError(findErr.Error)
 		ctx.JSON(findErr.Status, findErr)
 		return
 	}
-	ctx.JSON(http.StatusOK, user.Marshal(false))
+	generateToken, generateErr := token.GenerateToken(input.Email, input.Password)
+	if generateErr != nil {
+		ctx.JSON(generateErr.Status, generateErr)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"user":     user.Marshal(false),
+		"token":    generateToken,
+		"response": 200,
+	})
+
 }
