@@ -4,6 +4,7 @@ import (
 	"github.com/idanieldrew/blog-golang/internal/domain/user"
 	"github.com/idanieldrew/blog-golang/internal/request"
 	"github.com/idanieldrew/blog-golang/pkg/errors/restError"
+	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
@@ -30,15 +31,18 @@ func (s *userService) FindUser(loginUser request.LoginUser) (*user.User, *restEr
 	if findErr := data.FindWithLogin(); findErr != nil {
 		return nil, findErr
 	}
+
 	return data, nil
 }
 
 func (s *userService) Create(req request.RegisterUser) (*user.User, *restError.RestError) {
+	b, _ := bcrypt.GenerateFromPassword([]byte(req.Password), 8)
+
 	res := &user.User{
 		Name:      req.Name,
 		Email:     req.Email,
 		Phone:     req.Phone,
-		Password:  req.Password,
+		Password:  string(b),
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 		//Type:      1,

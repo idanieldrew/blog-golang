@@ -5,12 +5,13 @@ import (
 	"github.com/idanieldrew/blog-golang/internal/repository/postgres"
 	"github.com/idanieldrew/blog-golang/pkg/errors/restError"
 	"github.com/idanieldrew/blog-golang/pkg/logger"
+	"golang.org/x/crypto/bcrypt"
 )
 
 const (
 	queryGetUser                = "SELECT name,email,phone FROM users WHERE id= $1;"
-	queryInsertUser             = "INSERT INTO users(name,email,phone,password,created_at,updated_at) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id"
-	queryFindByEmailAndPassword = "SELECT name,email,phone FROM users WHERE email= $1 AND password= $2;"
+	queryInsertUser             = "INSERT INTO users(name,email,phone,password,created_at,updated_at) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id;"
+	queryFindByEmailAndPassword = "SELECT name,phone,password FROM users WHERE email= $1;"
 )
 
 func (u *User) Get() *restError.RestError {
@@ -49,6 +50,8 @@ func (u *User) Store() *restError.RestError {
 }
 
 func (u *User) FindWithLogin() *restError.RestError {
+	password := u.Password
+
 	stmt, err := postgres.Db.Prepare(queryFindByEmailAndPassword)
 	if err != nil {
 		logger.Error("problem in prepare to get user", err)
@@ -61,9 +64,13 @@ func (u *User) FindWithLogin() *restError.RestError {
 		}
 	}(stmt)
 
-	row := stmt.QueryRow(u.Email, u.Password)
+	row := stmt.QueryRow(u.Email)
 	scanErr := row.Scan(&u.Name, &u.Phone, &u.Password)
-	if scanErr != nil {
+
+	// Change correct password
+	passErr := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(password))
+
+	if scanErr != nil || passErr != nil {
 		logger.Error("email or pass is incorrect", scanErr)
 		return restError.UnauthorizedError("email or pass is incorrect")
 	}
