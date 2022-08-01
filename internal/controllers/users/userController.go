@@ -68,7 +68,7 @@ func Login(ctx *gin.Context) {
 		ctx.JSON(findErr.Status, findErr)
 		return
 	}
-	generateToken, generateErr := token.GenerateToken(input.Email, input.Password)
+	generateToken, generateErr := token.GenerateToken(input.Email)
 	if generateErr != nil {
 		ctx.JSON(generateErr.Status, generateErr)
 		return

@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2dcc0279-fd17-471d-bb29-920b94e257d9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/domain/user/user_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/user/user_dao.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/migrations/2019_6_17_8_14_8_14_create_users_table.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/internal/migrations/2019_6_17_8_14_8_14_create_users_table.up.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/services/user_service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/user_service/service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/controllers/users/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/controllers/users/userController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/pkg/token/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/pkg/token/token.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +38,14 @@
   <component name="GoLibraries">
     <option name="indexEntireGoPath" value="true" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/go/pkg/mod/github.com/kataras/jwt@v0.1.8/rsa.go" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/internal/controllers/users/userController.go" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/internal/domain/user/user_dao.go" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/internal/pkg/token/token.go" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/internal/services/user_service/service.go" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -57,7 +65,7 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "last_opened_file_path": "/home/danieldrew",
-    "settings.editor.selected.configurable": "preferences.editor.code.editing"
+    "settings.editor.selected.configurable": "editor.preferences.completion"
   }
 }]]></component>
   <component name="RecentsManager">
