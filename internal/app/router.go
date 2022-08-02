@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/idanieldrew/blog-golang/internal/controllers/posts"
 	"github.com/idanieldrew/blog-golang/internal/controllers/users"
+	"github.com/idanieldrew/blog-golang/internal/pkg/token"
 )
 
 func mapUrls() {
@@ -14,6 +15,7 @@ func mapUrls() {
 // auth route
 func authRoute() {
 	auth := router.Group("v1")
+	auth.Use(token.AuthMiddleware())
 	auth.POST("register", users.Register)
 	auth.POST("login", users.Login)
 }
