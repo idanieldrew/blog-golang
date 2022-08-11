@@ -2,26 +2,25 @@ package token
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"github.com/idanieldrew/blog-golang/pkg/errors/restError"
 	"github.com/idanieldrew/blog-golang/pkg/logger"
 	"github.com/kataras/jwt"
-	"log"
 	"time"
 )
 
 type (
-	claims struct {
+	Claims struct {
 		Email string `json:"email"`
 	}
 
-	header struct {
+	Header struct {
 		Kid string `json:"kid"`
 		Alg string `json:"alg"`
 	}
 )
 
 func GenerateToken(input1 string) (string, *restError.RestError) {
+	// load private key
 	privateKey, loadKeyErr := jwt.LoadPrivateKeyRSA(".keys/rsa_private_key.pem")
 	if loadKeyErr != nil {
 		logger.Error("problem in load rsa key", loadKeyErr)
@@ -29,12 +28,14 @@ func GenerateToken(input1 string) (string, *restError.RestError) {
 		return "", restErr
 	}
 
-	claims := claims{Email: input1}
-	header := header{
+	// Set Claims
+	claims := Claims{Email: input1}
+	header := Header{
 		Kid: "my_key_id_1",
 		Alg: jwt.RS256.Name(),
 	}
 
+	// Generate token
 	bytes, signErr := jwt.SignWithHeader(jwt.RS256, privateKey, claims, header, jwt.MaxAge(1*time.Hour))
 	if signErr != nil {
 		logger.Error("problem when sign", signErr)
@@ -45,7 +46,7 @@ func GenerateToken(input1 string) (string, *restError.RestError) {
 	return string(bytes), nil
 }
 
-var keys = map[string][]byte{
+var Keys = map[string][]byte{
 	"my_key_id_1": []byte(`-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw6OJ4K9LUz6MugrF7uB+
 /oZw8/f3J4CSPYZFXMTsWNVQSLlen6/pr7ZvyPsgLvBGikybxRu7ff6ufmHTWTm7
@@ -58,26 +59,8 @@ RQIDAQAB
 `),
 }
 
-func AuthMiddleware() gin.HandlerFunc {
-	return func(context *gin.Context) {
-		auth := context.Request.Header.Get("Authorization")
-
-		x, verifyErr := jwt.VerifyWithHeaderValidator(jwt.RS256, keys, []byte(auth), validateHeader)
-		if verifyErr != nil {
-			logger.Error("token not valid", verifyErr)
-			restError.UnauthorizedError("token not valid")
-		}
-		var c claims
-		err := x.Claims(&c)
-		if err != nil {
-			log.Fatalln(err, "ojo")
-		}
-		context.Next()
-	}
-}
-
-func validateHeader(alg string, headerDecoded []byte) (jwt.Alg, jwt.PublicKey, jwt.InjectFunc, error) {
-	var h header
+func ValidateHeader(alg string, headerDecoded []byte) (jwt.Alg, jwt.PublicKey, jwt.InjectFunc, error) {
+	var h Header
 	err := jwt.Unmarshal(headerDecoded, &h)
 	if err != nil {
 		return nil, nil, nil, err
@@ -91,7 +74,7 @@ func validateHeader(alg string, headerDecoded []byte) (jwt.Alg, jwt.PublicKey, j
 		return nil, nil, nil, fmt.Errorf("kid is empty")
 	}
 
-	key, ok := keys[h.Kid]
+	key, ok := Keys[h.Kid]
 	if !ok {
 		return nil, nil, nil, fmt.Errorf("unknown kid")
 	}
