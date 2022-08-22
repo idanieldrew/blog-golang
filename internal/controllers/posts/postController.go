@@ -14,6 +14,7 @@ func getPostBySlug(slug string) string {
 
 // Get post
 func Get(ctx *gin.Context) {
+	//user_service.Auth()
 	slug := getPostBySlug(ctx.Param("post"))
 
 	post, err := post_service.PostService.Get(slug)

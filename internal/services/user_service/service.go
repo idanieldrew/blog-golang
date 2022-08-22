@@ -65,3 +65,10 @@ func (s *userService) GetUser(userId int64) (*user.User, *restError.RestError) {
 
 	return res, nil
 }
+
+/*func Auth(mail string) {
+	var context *gin.Context
+
+	t := context.Request.Header.Get("Authorization")
+	token.Auth(t, mail)
+}*/

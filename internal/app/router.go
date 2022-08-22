@@ -22,6 +22,10 @@ func authRoute() {
 // user route
 func userRoute() {
 	user := router.Group("/users")
+
+	// Set auth middleware
+	user.Use(middlewares.AuthMiddleware())
+
 	//User
 	user.GET("/:user_id", users.Get)
 }

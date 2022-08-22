@@ -2,6 +2,8 @@ package token
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
+	"github.com/idanieldrew/blog-golang/internal/domain/user"
 	"github.com/idanieldrew/blog-golang/pkg/errors/restError"
 	"github.com/idanieldrew/blog-golang/pkg/logger"
 	"github.com/kataras/jwt"
@@ -83,6 +85,36 @@ func ValidateHeader(alg string, headerDecoded []byte) (jwt.Alg, jwt.PublicKey, j
 	if err != nil {
 		return nil, nil, nil, jwt.ErrTokenAlg
 	}
-
 	return nil, publicKey, nil, nil
+}
+
+func Auth(context *gin.Context) (*Claims, *restError.RestError) {
+	t := context.Request.Header.Get("Authorization")
+
+	claims := new(Claims)
+
+	validatorToken, validErr := jwt.VerifyWithHeaderValidator(jwt.RS256, Keys, []byte(t), ValidateHeader)
+	if validErr != nil {
+		logger.Error("token is not valid", validErr)
+		restErr := restError.ServerError("problem in server")
+		return nil, restErr
+	}
+
+	err := validatorToken.Claims(&claims)
+	if err != nil {
+		logger.Error("problem in get claims", validErr)
+		restErr := restError.ServerError("problem in server")
+		return nil, restErr
+	}
+
+	data := &user.User{
+		Email: claims.Email,
+	}
+
+	// Find user with email
+	if findErr := data.FindAuthUser(); findErr != nil {
+		return nil, findErr
+	}
+
+	return claims, nil
 }

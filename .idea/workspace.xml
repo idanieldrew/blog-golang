@@ -7,7 +7,11 @@
     <list default="true" id="2dcc0279-fd17-471d-bb29-920b94e257d9" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/app/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/controllers/posts/postController.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/controllers/posts/postController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/controllers/users/userController.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/controllers/users/userController.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/domain/user/user_dao.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/domain/user/user_dao.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/pkg/token/token.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/pkg/token/token.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/services/user_service/service.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/services/user_service/service.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

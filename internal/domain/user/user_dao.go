@@ -12,6 +12,7 @@ const (
 	queryGetUser                = "SELECT name,email,phone FROM users WHERE id= $1;"
 	queryInsertUser             = "INSERT INTO users(name,email,phone,password,created_at,updated_at) VALUES ($1,$2,$3,$4,$5,$6) RETURNING id;"
 	queryFindByEmailAndPassword = "SELECT name,phone,password FROM users WHERE email= $1;"
+	queryAuth                   = "SELECT id,name,email FROM users WHERE email=$1;"
 )
 
 func (u *User) Get() *restError.RestError {
@@ -44,7 +45,6 @@ func (u *User) Store() *restError.RestError {
 		logger.Error("problem in query row to insert user", err)
 		return restError.ServerError("server error")
 	}
-
 	u.Id = int64(lastId)
 	return nil
 }
@@ -73,6 +73,30 @@ func (u *User) FindWithLogin() *restError.RestError {
 	if scanErr != nil || passErr != nil {
 		logger.Error("email or pass is incorrect", scanErr)
 		return restError.UnauthorizedError("email or pass is incorrect")
+	}
+
+	return nil
+}
+
+func (u *User) FindAuthUser() *restError.RestError {
+	stmt, err := postgres.Db.Prepare(queryAuth)
+	if err != nil {
+		logger.Error("problem in prepare to get user", err)
+		return restError.ServerError("server error")
+	}
+
+	defer func(stmt *sql.Stmt) {
+		if se := stmt.Close(); se != nil {
+			return
+		}
+	}(stmt)
+
+	row := stmt.QueryRow(u.Email)
+	scanErr := row.Scan(&u.Id, &u.Name, &u.Email)
+
+	if scanErr != nil {
+		logger.Error("email is incorrect", scanErr)
+		return restError.UnauthorizedError("email is incorrect")
 	}
 
 	return nil
