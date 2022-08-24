@@ -88,7 +88,7 @@ func ValidateHeader(alg string, headerDecoded []byte) (jwt.Alg, jwt.PublicKey, j
 	return nil, publicKey, nil, nil
 }
 
-func Auth(context *gin.Context) (*Claims, *restError.RestError) {
+func Auth(context *gin.Context) (*user.User, *restError.RestError) {
 	t := context.Request.Header.Get("Authorization")
 
 	claims := new(Claims)
@@ -116,5 +116,5 @@ func Auth(context *gin.Context) (*Claims, *restError.RestError) {
 		return nil, findErr
 	}
 
-	return claims, nil
+	return data, nil
 }
